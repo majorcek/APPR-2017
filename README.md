@@ -3,9 +3,8 @@
 Repozitorij z gradivi pri predmetu APPR v študijskem letu 2016/17
 
 ## Tematika
-
-Izbrali si boste temo, s katero se bo vaš projekt ukvarjal. Tukaj boste
-napisali, kje ste dobili podatke, ter kakšen je vaš cilj.
+Odločil sem se, da bom analiziral podatke o uspešnih smučarski poletih, dolgih vsaj 240m. Podatke sem dobil iz wikipedie(https://en.wikipedia.org/wiki/List_of_the_longest_ski_jumps) in pa iz uradne strani mednarodne smučaske zveze(.xlsx). 
+Ugotoviti želim, kako različne razmere vplivajo na dolžino skokov in kako se z leti spreminja število poletov čez 240m.
 
 ## Program
 
