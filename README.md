@@ -3,9 +3,12 @@
 Repozitorij z gradivi pri predmetu APPR v študijskem letu 2016/17
 
 ## Tematika
-Odločil sem se, da bom analiziral podatke o uspešnih smučarski poletih, dolgih vsaj 240m. Podatke sem dobil iz wikipedie(https://en.wikipedia.org/wiki/List_of_the_longest_ski_jumps) in pa iz uradne strani mednarodne smučaske zveze(.xlsx). 
+Odločil sem se, da bom analiziral podatke o uspešnih smučarski poletih, dolgih vsaj 240m. Podatke sem dobil iz wikipedie(https://en.wikipedia.org/wiki/List_of_the_longest_ski_jumps) in pa iz uradne strani mednarodne smučaske zveze(http://medias4.fis-ski.com/pdf/2013/JP/3859/2013JP3859RL.pdf).
 Ugotoviti želim, kako različne razmere vplivajo na dolžino skokov in kako se z leti spreminja število poletov čez 240m.
 
+Ko združim podatke v eno tabelo, zgledajo tako: http://prntscr.com/evfx18
+
+Na koncu bom še razvrstil skoke v skupine s podobnimi razmerami in pa poskušal oceniti, kako se bo število skokov čez 240m povečevalo na posamezni skaklnici.
 ## Program
 
 Glavni program in poročilo se nahajata v datoteki `projekt.Rmd`. Ko ga prevedemo,
