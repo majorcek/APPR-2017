@@ -110,7 +110,31 @@ ggplot() + geom_polygon(data = left_join(zemljevid, povprecja, by = c("OB_UIME" 
   ggtitle("Povprečno število otrok v družini") + xlab("") + ylab("") +
   guides(fill = guide_colorbar(title = "Povprečje"))
 ```
-
+# graf2 povprečen skok po letih in skakalnici
+```
+ggplot(tabela,aes(x = LETO, y = DOLŽINA, col = as.factor(SKAKALNICA))) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE) +
+  labs(x = "leto", y = "povrečna dolžina", col = "skakalnica")
+```
+#graf3 dolžina glede na pogoje
+```
+ggplot(data = za_grafe,aes(x = RAZREDI, y = povprečne_razmere, col = za_grafe$SKAKALNICA),alpha = 0.01) +
+  scale_color_manual(name = "Skakalnica", 
+  values = c("Vikersund" = "royalblue", "Planica" = "green4","Kulm" = "orange","Obersdorf" =  "gold","Harrachov" = "red")) +
+  geom_line() +
+  geom_smooth(method=lm, se=FALSE) +
+  labs(x = "dolžina", y = "pribitek/odbitek točk za razmere", col = "skakalnica")
+```
+# graf števila tekmovanj po letih
+```
+ggplot(tekmovanje,aes(LETO,st_tekem,fill=SKAKALNICA)) +
+  geom_bar(stat="identity",width = 0.4) +
+  scale_fill_brewer("SKAKALNICA", palette = "RdGy") +
+  ylab("število tekem v sezoni")+ 
+  scale_y_continuous(breaks= c(0,2,4,6,8)) +
+  scale_x_continuous(breaks=seq(2011, 2017, 1))
+```
 ***
 
 # Napredna analiza podatkov
