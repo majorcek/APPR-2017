@@ -82,12 +82,13 @@ head(obcine)
 
 Slika \ref{fig:histogram} prikazuje porazdelitev števila naselij v občinah.
 Slika \ref{fig:porazdelitev} prikazuje porazdelitev skokov na letalnicah od leta 2011 naprej
-
+```
 ggplot(vsi_skoki,aes(x = DOLŽINA)) +
   geom_histogram(aes(y = ..density..), binwidth = 5,colour = "black", fill = "white") +
   geom_density(alpha = 0.2, fill = "#FF6666") +
   labs(x = "dolžina",y = "delež skokov") +
   scale_x_continuous(breaks = number_ticks(10))
+```
 ```{r histogram, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Histogram števila naselij v občinah'}
 ggplot(obcine, aes(x = naselja)) + geom_histogram() +
   ggtitle("Pogostost števila naselij") + xlab("Število naselij") + ylab("Število občin")
