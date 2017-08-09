@@ -76,13 +76,26 @@ Tretja tabela iz wikipedije je tabela dvomestinih kratic za države (https://en.
     2. stolpec: Code3 , factor \n
     
 ```{r razpredelnice}
-kable(head(druzine))
-head(obcine)
+kable(head(letaliski_promet))
+kable(head(zracni_promet))
+kable(head(potniki_mb))
+kable(head(zmogljivosti))
+kable(head(prihodi_prenocitve))
 ```
+Podatke o skokih na posameznih tekmah sem uvozil iz baze podatkov FIS-a v excel (ker so bili na voljo samo v formatu PDF) in potem iz xlsx v RStudio. Ostale podatke pa sem uvozil iz Wikipedije v obliki HTML.
 
 ## Preliminarna analiza
+
+```{r vizualizacija, echo=FALSE, message=FALSE, warning=FALSE}
+source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
+```
+
 ##### Porazdelitev skokov
-Slika \ref{fig:porazdelitev} prikazuje porazdelitev skokov na letalnicah od leta 2011 naprej. V skladu s pričakovanji dobimo, da so skoki najpogosteje dolgi okrog 200m. 
+Slika \ref{fig:graf1} prikazuje porazdelitev skokov na letalnicah od leta 2011 naprej. V skladu s pričakovanji dobimo, da so skoki najpogosteje dolgi okrog 200m. 
+```{r graf1, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Porazdelitev dolžin skokov'}
+print(porazdelitev)
+```
+
 ```
 ggplot(vsi_skoki,aes(x = DOLŽINA)) +
   geom_histogram(aes(y = ..density..), binwidth = 5,colour = "black", fill = "white") +
@@ -91,7 +104,11 @@ ggplot(vsi_skoki,aes(x = DOLŽINA)) +
   scale_x_continuous(breaks = number_ticks(10))
 ```
 ##### število tekem 
-Slika \ref{fig:tekmovanje2} prikazuje število tekem v posameznem letu. Vidimo, da je število dokaj konstantno. Izjema je leto 2014, ko so bile zaradi zamude pri prenovi Planice na sporedu zgolj tri tekme.
+Slika \ref{fig:graf2} prikazuje število tekem v posameznem letu. Vidimo, da je število dokaj konstantno. Izjema je leto 2014, ko so bile zaradi zamude pri prenovi Planice na sporedu zgolj tri tekme.
+```{r graf2, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Število tekem po letih'}
+print(tekmovanje)
+```
+
 ```
 ggplot(tekmovanje,aes(LETO,st_tekem,fill=SKAKALNICA)) +
   geom_bar(stat="identity",width = 0.4) +
@@ -100,26 +117,35 @@ ggplot(tekmovanje,aes(LETO,st_tekem,fill=SKAKALNICA)) +
   scale_y_continuous(breaks= c(0,2,4,6,8)) +
   scale_x_continuous(breaks=seq(2011, 2017, 1))
 ```
-
-```{r tekmovanje2, echo=FALSE, message=FALSE, fig.align='center', fig.cap='število tekmovanj v posameznem letu'}
-print(tekmovanje2)
-```
 ***
 
-##### Analiza in vizualizacija podatkov
+# Analiza in vizualizacija podatkov
 
 ```{r vizualizacija, echo=FALSE, message=FALSE}
 source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
 ```
 
 ##### povprečen skok po letih in skakalnici
+Z naslednjim grafom sem skušal prikazati, kako se z leti spreminja povprečna dolžina skokov na posameznih skakalnicah. Izkazalo se je, da se povprečje skoraj povsod povečuje, kar gre delno pripisati tudi povečeanju skakalnic.
+```{r graf3, echo=FALSE, message=FALSE, fig.align='center', fig.cap='povprečna dolžina skokov'}
+print(povprecen)
+```
+
+na dolgo
+
 ```
 ggplot(tabela,aes(x = LETO, y = DOLŽINA, col = as.factor(SKAKALNICA))) +
   geom_point() +
   geom_smooth(method = lm, se = FALSE) +
   labs(x = "leto", y = "povrečna dolžina", col = "skakalnica")
 ```
+
 #####  dolžina glede na pogoje
+Graf \ref{fig:graf4} prikazuje, kako pogoji vplivajo na dolžino skoka. Po pričakovanjih se izkaže, da so najdaljalši skoki doseženi v dobrih razmerah in da zvišanje naleta ob slabih razmerah ne nadomesti dobrih vremenskih razmer.
+```{r graf4, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Porazdelitev dolžin skokov'}
+print(dolzina)
+```
+na dolgo
 ```
 ggplot(data = za_grafe,aes(x = RAZREDI, y = povprečne_razmere, col = za_grafe$SKAKALNICA),alpha = 0.01) +
   scale_color_manual(name = "Skakalnica", 
@@ -132,6 +158,10 @@ ggplot(data = za_grafe,aes(x = RAZREDI, y = povprečne_razmere, col = za_grafe$S
 ### Zemljevidi
 
 Na prvem zemljevidu sem označil vse države, za katere obstaja uradni podatek o državnem rekordu. Države so obarvane glede na to, kje je bil rekord dosežen. Zaradi večje preglednosti sem se omejil na štiri skakalnice.
+```{r zemljevid1, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Zemljevid prenočitev'}
+print(zemljevid1)
+```
+na dolgo
 ```
 ggplot() +
   geom_polygon(data = pred_for_map1, aes(x = long, y = lat, group = group, fill = place)) +
@@ -140,6 +170,10 @@ ggplot() +
   ditch_the_axes
 ```
 Na drugem grafu pa so bolj podrobno predstavljeni državni rekordi evropskih držav. Dolžino rekorda označuje barva, medtem ko skakalnico določa barva meje. S sivo so označene države, za katere ni uradnih državnih rekordov.
+```{r zemljevid2, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Zemljevid prenočitev'}
+print(zemljevidEuropa)
+```
+na dolgo
 ```
 ggplot() +
   geom_polygon(data = pred_for_map1, aes(x = long, y = lat, group = group, fill = metres)) + 
@@ -162,5 +196,5 @@ source("analiza/analiza.r", encoding = "UTF-8")
 ***
 
 ```{r shiny, echo = FALSE}
-shinyAppDir("shiny", options=list(width="100%", height=600))
+shinyAppDir("shiny", options=list(width="100%", height=700))
 ```
