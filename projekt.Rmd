@@ -95,7 +95,7 @@ Slika \ref{fig:graf1} prikazuje porazdelitev skokov na letalnicah od leta 2011 n
 ```{r graf1, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Porazdelitev dolžin skokov'}
 print(porazdelitev)
 ```
-
+na dolgo
 ```
 ggplot(vsi_skoki,aes(x = DOLŽINA)) +
   geom_histogram(aes(y = ..density..), binwidth = 5,colour = "black", fill = "white") +
@@ -108,7 +108,7 @@ Slika \ref{fig:graf2} prikazuje število tekem v posameznem letu. Vidimo, da je 
 ```{r graf2, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Število tekem po letih'}
 print(st_tekem)
 ```
-
+na dolgo
 ```
 ggplot(tekmovanje,aes(LETO,st_tekem,fill=SKAKALNICA)) +
   geom_bar(stat="identity",width = 0.4) +
