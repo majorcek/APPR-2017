@@ -3,12 +3,54 @@
 Repozitorij z gradivi pri predmetu APPR v študijskem letu 2016/17
 
 ## Tematika
-Odločil sem se, da bom analiziral podatke o uspešnih smučarski poletih, dolgih vsaj 240m. Podatke sem dobil iz wikipedie(https://en.wikipedia.org/wiki/List_of_the_longest_ski_jumps) in pa iz uradne strani mednarodne smučaske zveze(http://medias4.fis-ski.com/pdf/2013/JP/3859/2013JP3859RL.pdf).
-Ugotoviti želim, kako različne razmere vplivajo na dolžino skokov in kako se z leti spreminja število poletov čez 240m.
+Odločil sem se, da bom v projektu analiziral smučarske skoke, saj je to šport, ki je meni eden izmed najlubših za spremljanje, hkrati pa še ni narejenih veliko analiz na tem področju. Še posebej rad spremljam smučarske polete, zato sem se omejil in zbral podatke zgolj za tekme na letalnicah (kar pomeni, da je velikost skakalnice večja od 150m) tako v svetovnem pokalu kot na svetovnih prvenstvih v poletih. Podatki so od leta 2011 naprej, saj se pred tem še ni uporabljalo vetrne izravnave. 
 
-Ko združim podatke v eno tabelo, zgledajo tako: http://prntscr.com/evfx18
+Podatke sem pridobil iz uradne baze podatkov in iz wikipedie. Iz uradne baze sem dobil rezultate posameznega tekmovanja (denimo Planica, 23. marec 2017), medtem ko sem iz Wikipedie dobil podatke o državnih rekordih, poleg tega pa še nekaj tabel, ki sem jih sproti potreboval za analizo (npr. 2-mestne kratice držav). Največjo težave so mi predstavljali podatki iz FIS-a, saj so na voljo samo v PDF, tako da sem jih s programom najprej preoblikoval v xlsx ter nato uvozil v RStudio.
+Najpomembnejši strani:
+    * baza FIS-a: https://data.fis-ski.com/ski-jumping/results.html
+    * wikipedia: https://en.wikipedia.org/wiki/Ski_jumping
 
-Na koncu bom še razvrstil skoke v skupine s podobnimi razmerami in pa poskušal oceniti, kako se bo število skokov čez 240m povečevalo na posamezni skaklnici.
+Poizkušal bom ugotoviti, ali držijo nekatere moje domneve (da imajo tekmovalci iz Slovenije nižje hitrost ob doskoku), preveriti si želim tudi, ali držijo trditve slovenskih kometatorjev o nepoštenemu slogovnemu ocenjevanju. Poleg tega bom skušal zanimivo prikazati še nekatere druge podatke, denimo razvoj državnih rekordov in ocentiti njihovo gibanje v prihodnje.
+#### tabele
+Kot je navedeno zgoraj, sem večino podatkov o skokih dobil iz baze FIS-a (https://data.fis-ski.com/dynamic/event-details.html?event_id=39344&cal_suchsector=JP). Za vsako tekmovanje sem dobil svojo tabelo, ki je imela naslednjo obliko:
+kable(head(Planica2011_sobota))
+    * 1. stolpec: IME in PRIIMEK skakalca , factor
+    * 2. stolpec: HITROST ob odskoku (enota m/s) , številska spremenljivka 
+    * 3. stolpec: DOLŽINA (enota m) , številska spremenljivka 
+    * 4. stolpec: TOČKE (za dolžino) , številska spremenljivka
+    * 5.-9. stolpec: POSAMEZNE SODNIŠKE OCENE , številska spremenljivka 
+    * 10. stolpec: OCENE SKUPAJ (skupne sodniške ocene) , številska spremenljivka 
+    * 11. stolpec: ZALET (zaletno mesto) , številska spremenljivka 
+    * 12. stolpec: TOČKE ZA ZALET (pribitek/odbitek za spremenjeno , številska spremenljivka zaletno mesto) 
+    * 13. stolpec: VETER (enota m/s) , številska spremenljivka 
+    * 14. stolpec: IZRAVNAVA (pribitek/odbitek zaradi vetra) , številska spremenljivka 
+    * 15. stolpec: SKUPAJ TOČKE ( TOČKE + OCENE SKUPAJ + TOČKE ZA ZALET + IZRAVNAVA) , številska spremenljivka 
+    * 16. stolpec: REZULTAT V SERIJI , številska spremenljivka 
+    * 17. stolpec: LETO (kdaj je potekalo tekmovanje) , številska spremenljivka 
+    * 18. stolpec: SKAKALNICA (kje je potekalo tekmovanje) , character 
+    
+Tabele sem nato najprej združil po letih (Planica2011 vsebuje podatke o tekmah v Planici v petek, soboto in nedeljo 2011). Nato sem jih združil po skakalnicah (Planica je sestavljena iz Planica2011, Planica2012, ... , Planica 2017). Na koncu pa sem naredil še dataframe, kje so zbrani vsi skoki in jo poimenoval vsi_skoki.
+
+Podatke sem pridobil tudi iz Wikipedie, predvsem s strani https://en.wikipedia.org/wiki/Ski_jumping.
+Tabela nad240 vsebuje podatke o vseh poletih, dolgih vsaj 240m . Izločil sem tiste skoke, ki niso bili doseženi na tekmi (treningi, poskusni skoki) in vzel samo uspešne skoke (izločil padce), saj sem želel opraviti analizo uspešnih skokov. Padec pomeni izgubo točk v višini približno 20 metrov, zaradi česar tak skok ne prinese vrhunske uvrstitve.
+Tabela ima nasldnjo obliko: 
+kable(head(nad240))
+    1. stolpec: LETO , številska spremenljivka \n
+    2. stolpec: SKAKALEC (ime in priimek), factor \n
+    3. stolpec: DRŽAVA (od kod je skakalec), factor \n
+    4. stolpec: LOKACIJA (na kateri skakalnici), factor \n
+    5. stolpec: DOLŽINA (enota m) , številska spremenljivka \n   
+Druga tabela, ki sem jo pridobil iz Wikipedie, je tabela državnih rekordov in je dostopna na istem naslovu. To tabelo sem moral malenkost povpraviti, saj zaradi čudne oblike tabele nekaj vrstic ni pravilno uvozilo.
+
+Tretja tabela iz wikipedije je tabela dvomestinih kratic za države (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). 
+    kable(head(okrajsave2))
+    1. stolpec: Code2 , factor  \n
+    2. stolpec: Country , character  \n
+Četrta tabela iz wikipedije je tabela tromestinih kratic za države (https://en.wikipedia.org/wiki/ISO_3166-1). \n
+    kable(head(okrajsave3))
+    1. stolpec: Country , factor \n
+    2. stolpec: Code3 , factor \n
+
 ## Program
 
 Glavni program in poročilo se nahajata v datoteki `projekt.Rmd`. Ko ga prevedemo,
