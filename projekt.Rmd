@@ -135,6 +135,27 @@ ggplot(tekmovanje,aes(LETO,st_tekem,fill=SKAKALNICA)) +
   scale_y_continuous(breaks= c(0,2,4,6,8)) +
   scale_x_continuous(breaks=seq(2011, 2017, 1))
 ```
+### Zemljevidi
+```
+ggplot() +
+  geom_polygon(data = pred_for_map1, aes(x = long, y = lat, group = group, fill = place)) +
+  scale_fill_brewer(name = "SKAKALNICA", palette = "Spectral", na.value = "grey50") +
+  coord_quickmap(xlim = c(-153,180), ylim = c(-55,90)) +
+  ditch_the_axes
+```
+
+```
+ggplot() +
+  geom_polygon(data = pred_for_map1, aes(x = long, y = lat, group = group, fill = metres)) + 
+  scale_fill_gradient2(name = "DRŽAVNI\nREKORD",
+                      low = "cadetblue2", mid = "white", high = "green4", midpoint = 170, 
+                      space = "Lab", na.value = "grey50", guide = "colourbar") +
+  geom_path(data = pred_for_map1,  aes(x = long, y = lat, group = group, colour=pred_for_map1$place), size = 1) +
+  scale_color_manual(name = "SKAKALNICA",
+                    breaks = c("Planica", "Vikersund", "Kulm", "Harrachov", "ostalo"),
+                    values = c("Planica" = "chocolate1", "Vikersund" = "orangered", "Kulm" = "gold1", "Harrachov" = "green", "ostalo" = "orchid4"))+ 
+  coord_quickmap(xlim = c(-25, 40), ylim = c(32, 72))
+```
 ***
 
 # Napredna analiza podatkov
