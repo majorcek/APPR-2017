@@ -82,7 +82,7 @@ kable(head(okrajsave3))
 kable(head(nad240))
 kable(head(drzavni_rekordi))
 ```
-Podatke o skokih na posameznih tekmah sem uvozil iz baze podatkov FIS-a v excel (ker so bili na voljo samo v formatu PDF) in potem iz xlsx v RStudio. Ostale podatke pa sem uvozil iz Wikipedije v obliki HTML.
+Podatke o skokih na posameznih tekmah sem uvozil iz baze podatkov FIS-a v excel (ker so bili na voljo samo v formatu PDF) in potem v RStudio. Ostale podatke pa sem uvozil iz Wikipedije v obliki HTML.
 
 ## Preliminarna analiza
 
