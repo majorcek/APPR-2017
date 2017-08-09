@@ -80,8 +80,9 @@ kable(head(druzine))
 head(obcine)
 ```
 
-Slika \ref{fig:histogram} prikazuje porazdelitev števila naselij v občinah.
-Slika \ref{fig:porazdelitev} prikazuje porazdelitev skokov na letalnicah od leta 2011 naprej
+## Preliminarna analiza
+##### Porazdelitev skokov
+Slika \ref{fig:porazdelitev} prikazuje porazdelitev skokov na letalnicah od leta 2011 naprej. V skladu s pričakovanji dobimo, da so skoki najpogosteje dolgi okrog 200m. 
 ```
 ggplot(vsi_skoki,aes(x = DOLŽINA)) +
   geom_histogram(aes(y = ..density..), binwidth = 5,colour = "black", fill = "white") +
@@ -89,44 +90,8 @@ ggplot(vsi_skoki,aes(x = DOLŽINA)) +
   labs(x = "dolžina",y = "delež skokov") +
   scale_x_continuous(breaks = number_ticks(10))
 ```
-```{r histogram, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Histogram števila naselij v občinah'}
-ggplot(obcine, aes(x = naselja)) + geom_histogram() +
-  ggtitle("Pogostost števila naselij") + xlab("Število naselij") + ylab("Število občin")
-```
-
-***
-
-##### Analiza in vizualizacija podatkov
-
-```{r vizualizacija, echo=FALSE, message=FALSE}
-source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
-```
-
-Slika \ref{fig:zemljevid} prikazuje povprečno velikost družine za vsako občino.
-
-```{r zemljevid, echo=FALSE, fig.align='center', fig.cap='Zemljevid povprečnega števila otrok v družini'}
-ggplot() + geom_polygon(data = left_join(zemljevid, povprecja, by = c("OB_UIME" = "obcina")),
-                        aes(x = long, y = lat, group = group, fill = povprecje)) +
-  ggtitle("Povprečno število otrok v družini") + xlab("") + ylab("") +
-  guides(fill = guide_colorbar(title = "Povprečje"))
-```
-##### graf2 povprečen skok po letih in skakalnici
-```
-ggplot(tabela,aes(x = LETO, y = DOLŽINA, col = as.factor(SKAKALNICA))) +
-  geom_point() +
-  geom_smooth(method = lm, se = FALSE) +
-  labs(x = "leto", y = "povrečna dolžina", col = "skakalnica")
-```
-##### graf3 dolžina glede na pogoje
-```
-ggplot(data = za_grafe,aes(x = RAZREDI, y = povprečne_razmere, col = za_grafe$SKAKALNICA),alpha = 0.01) +
-  scale_color_manual(name = "Skakalnica", 
-  values = c("Vikersund" = "royalblue", "Planica" = "green4","Kulm" = "orange","Obersdorf" =  "gold","Harrachov" = "red")) +
-  geom_line() +
-  geom_smooth(method=lm, se=FALSE) +
-  labs(x = "dolžina", y = "pribitek/odbitek točk za razmere", col = "skakalnica")
-```
-##### graf4 števila tekmovanj po letih
+##### število tekem 
+Slika \ref{fig:tekmovanje2} prikazuje število tekem v posameznem letu. Vidimo, da je število dokaj konstantno. Izjema je leto 2014, ko so bile zaradi zamude pri prenovi Planice na sporedu zgolj tri tekme.
 ```
 ggplot(tekmovanje,aes(LETO,st_tekem,fill=SKAKALNICA)) +
   geom_bar(stat="identity",width = 0.4) +
@@ -135,7 +100,38 @@ ggplot(tekmovanje,aes(LETO,st_tekem,fill=SKAKALNICA)) +
   scale_y_continuous(breaks= c(0,2,4,6,8)) +
   scale_x_continuous(breaks=seq(2011, 2017, 1))
 ```
+
+```{r tekmovanje2, echo=FALSE, message=FALSE, fig.align='center', fig.cap='število tekmovanj v posameznem letu'}
+print(tekmovanje2)
+```
+***
+
+##### Analiza in vizualizacija podatkov
+
+```{r vizualizacija, echo=FALSE, message=FALSE}
+source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
+```
+
+##### povprečen skok po letih in skakalnici
+```
+ggplot(tabela,aes(x = LETO, y = DOLŽINA, col = as.factor(SKAKALNICA))) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE) +
+  labs(x = "leto", y = "povrečna dolžina", col = "skakalnica")
+```
+#####  dolžina glede na pogoje
+```
+ggplot(data = za_grafe,aes(x = RAZREDI, y = povprečne_razmere, col = za_grafe$SKAKALNICA),alpha = 0.01) +
+  scale_color_manual(name = "Skakalnica", 
+  values = c("Vikersund" = "royalblue", "Planica" = "green4","Kulm" = "orange","Obersdorf" =  "gold","Harrachov" = "red")) +
+  geom_line() +
+  geom_smooth(method=lm, se=FALSE) +
+  labs(x = "dolžina", y = "pribitek/odbitek točk za razmere", col = "skakalnica")
+```
+
 ### Zemljevidi
+
+Na prvem zemljevidu sem označil vse države, za katere obstaja uradni podatek o državnem rekordu. Države so obarvane glede na to, kje je bil rekord dosežen. Zaradi večje preglednosti sem se omejil na štiri skakalnice.
 ```
 ggplot() +
   geom_polygon(data = pred_for_map1, aes(x = long, y = lat, group = group, fill = place)) +
@@ -143,7 +139,7 @@ ggplot() +
   coord_quickmap(xlim = c(-153,180), ylim = c(-55,90)) +
   ditch_the_axes
 ```
-
+Na drugem grafu pa so bolj podrobno predstavljeni državni rekordi evropskih držav. Dolžino rekorda označuje barva, medtem ko skakalnico določa barva meje. S sivo so označene države, za katere ni uradnih državnih rekordov.
 ```
 ggplot() +
   geom_polygon(data = pred_for_map1, aes(x = long, y = lat, group = group, fill = metres)) + 
@@ -163,19 +159,6 @@ ggplot() +
 ```{r analiza, echo=FALSE, message=FALSE}
 source("analiza/analiza.r", encoding = "UTF-8")
 ```
-
-Slika \ref{fig:graf} prikazuje povezavo med številom naselij in površino občine.
-
-```{r graf, echo=FALSE, fig.align='center', fig.cap='Povezava med številom naselij in površino občine'}
-ggplot(inner_join(obcine, data.frame(obcina = names(skupine),
-                                     skupina = factor(skupine)), by = "obcina")
-, aes(x = povrsina, y = naselja, color = skupina, size = prebivalci/1000)) + geom_point() +
-  ggtitle("Število naselij glede na površino občine") +
-  xlab(expression("Površina (km"^2 * ")")) + ylab("Št. naselij") +
-  guides(color = guide_legend(title = "Skupina"),
-         size = guide_legend(title = "Prebivalci (* 1000)"))
-```
-
 ***
 
 ```{r shiny, echo = FALSE}
