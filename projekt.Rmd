@@ -96,7 +96,7 @@ ggplot(obcine, aes(x = naselja)) + geom_histogram() +
 
 ***
 
-# Analiza in vizualizacija podatkov
+##### Analiza in vizualizacija podatkov
 
 ```{r vizualizacija, echo=FALSE, message=FALSE}
 source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
@@ -110,14 +110,14 @@ ggplot() + geom_polygon(data = left_join(zemljevid, povprecja, by = c("OB_UIME" 
   ggtitle("Povprečno število otrok v družini") + xlab("") + ylab("") +
   guides(fill = guide_colorbar(title = "Povprečje"))
 ```
-# graf2 povprečen skok po letih in skakalnici
+##### graf2 povprečen skok po letih in skakalnici
 ```
 ggplot(tabela,aes(x = LETO, y = DOLŽINA, col = as.factor(SKAKALNICA))) +
   geom_point() +
   geom_smooth(method = lm, se = FALSE) +
   labs(x = "leto", y = "povrečna dolžina", col = "skakalnica")
 ```
-#graf3 dolžina glede na pogoje
+##### graf3 dolžina glede na pogoje
 ```
 ggplot(data = za_grafe,aes(x = RAZREDI, y = povprečne_razmere, col = za_grafe$SKAKALNICA),alpha = 0.01) +
   scale_color_manual(name = "Skakalnica", 
@@ -126,7 +126,7 @@ ggplot(data = za_grafe,aes(x = RAZREDI, y = povprečne_razmere, col = za_grafe$S
   geom_smooth(method=lm, se=FALSE) +
   labs(x = "dolžina", y = "pribitek/odbitek točk za razmere", col = "skakalnica")
 ```
-# graf števila tekmovanj po letih
+##### graf4 števila tekmovanj po letih
 ```
 ggplot(tekmovanje,aes(LETO,st_tekem,fill=SKAKALNICA)) +
   geom_bar(stat="identity",width = 0.4) +
