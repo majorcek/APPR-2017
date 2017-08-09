@@ -76,11 +76,11 @@ Tretja tabela iz wikipedije je tabela dvomestinih kratic za države (https://en.
     2. stolpec: Code3 , factor \n
     
 ```{r razpredelnice}
-kable(head(letaliski_promet))
-kable(head(zracni_promet))
-kable(head(potniki_mb))
-kable(head(zmogljivosti))
-kable(head(prihodi_prenocitve))
+kable(head(vsi_skoki))
+kable(head(okrajsave2))
+kable(head(okrajsave3))
+kable(head(nad240))
+kable(head(drzavni_rekordi))
 ```
 Podatke o skokih na posameznih tekmah sem uvozil iz baze podatkov FIS-a v excel (ker so bili na voljo samo v formatu PDF) in potem iz xlsx v RStudio. Ostale podatke pa sem uvozil iz Wikipedije v obliki HTML.
 
@@ -106,7 +106,7 @@ ggplot(vsi_skoki,aes(x = DOLŽINA)) +
 ##### število tekem 
 Slika \ref{fig:graf2} prikazuje število tekem v posameznem letu. Vidimo, da je število dokaj konstantno. Izjema je leto 2014, ko so bile zaradi zamude pri prenovi Planice na sporedu zgolj tri tekme.
 ```{r graf2, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Število tekem po letih'}
-print(tekmovanje)
+print(st_tekem)
 ```
 
 ```
