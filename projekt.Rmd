@@ -1,5 +1,5 @@
 ---
-title: "Analiza smučarskih poletov od leta 2011 - Poročilo pri predmetu Analiza podatkov s programom R"
+title: "Analiza smučarskih poletov - Poročilo pri predmetu Analiza podatkov s programom R"
 author: "Jaša Štefan"
 output:
   html_document: default
@@ -36,7 +36,8 @@ Poizkušal bom ugotoviti, ali držijo nekatere moje domneve (da imajo tekmovalci
 source("uvoz/uvoz.r", encoding = "UTF-8")
 ```
 
-Kot je navedeno zgoraj, sem večino podatkov o skokih dobil iz baze FIS-a (https://data.fis-ski.com/dynamic/event-details.html?event_id=39344&cal_suchsector=JP). Za vsako tekmovanje sem dobil svojo tabelo, ki je imela naslednjo obliko: 
+Kot je navedeno zgoraj, sem večino podatkov o skokih dobil iz baze FIS-a (https://data.fis-ski.com/dynamic/event-details.html?event_id=39344&cal_suchsector=JP). Za vsako tekmovanje sem dobil svojo tabelo, ki je imela naslednjo obliko:
+kable(head(Planica2011_sobota))
     * 1. stolpec: IME in PRIIMEK skakalca , factor
     * 2. stolpec: HITROST ob odskoku (enota m/s) , številska spremenljivka 
     * 3. stolpec: DOLŽINA (enota m) , številska spremenljivka 
@@ -56,7 +57,8 @@ Tabele sem nato najprej združil po letih (Planica2011 vsebuje podatke o tekmah 
 
 Podatke sem pridobil tudi iz Wikipedie, predvsem s strani https://en.wikipedia.org/wiki/Ski_jumping.
 Tabela nad240 vsebuje podatke o vseh poletih, dolgih vsaj 240m . Izločil sem tiste skoke, ki niso bili doseženi na tekmi (treningi, poskusni skoki) in vzel samo uspešne skoke (izločil padce), saj sem želel opraviti analizo uspešnih skokov. Padec pomeni izgubo točk v višini približno 20 metrov, zaradi česar tak skok ne prinese vrhunske uvrstitve.
-Tabela ima nasldnjo obliko:  \n
+Tabela ima nasldnjo obliko: 
+kable(head(nad240))
     1. stolpec: LETO , številska spremenljivka \n
     2. stolpec: SKAKALEC (ime in priimek), factor \n
     3. stolpec: DRŽAVA (od kod je skakalec), factor \n
@@ -64,10 +66,12 @@ Tabela ima nasldnjo obliko:  \n
     5. stolpec: DOLŽINA (enota m) , številska spremenljivka \n   
 Druga tabela, ki sem jo pridobil iz Wikipedie, je tabela državnih rekordov in je dostopna na istem naslovu. To tabelo sem moral malenkost povpraviti, saj zaradi čudne oblike tabele nekaj vrstic ni pravilno uvozilo.
 
-Tretja tabela iz wikipedije je tabela dvomestinih kratic za države (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).  \n
+Tretja tabela iz wikipedije je tabela dvomestinih kratic za države (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). 
+    kable(head(okrajsave2))
     1. stolpec: Code2 , factor  \n
     2. stolpec: Country , character  \n
 Četrta tabela iz wikipedije je tabela tromestinih kratic za države (https://en.wikipedia.org/wiki/ISO_3166-1). \n
+    kable(head(okrajsave3))
     1. stolpec: Country , factor \n
     2. stolpec: Code3 , factor \n
     
@@ -77,7 +81,13 @@ head(obcine)
 ```
 
 Slika \ref{fig:histogram} prikazuje porazdelitev števila naselij v občinah.
+Slika \ref{fig:porazdelitev} prikazuje porazdelitev skokov na letalnicah od leta 2011 naprej
 
+ggplot(vsi_skoki,aes(x = DOLŽINA)) +
+  geom_histogram(aes(y = ..density..), binwidth = 5,colour = "black", fill = "white") +
+  geom_density(alpha = 0.2, fill = "#FF6666") +
+  labs(x = "dolžina",y = "delež skokov") +
+  scale_x_continuous(breaks = number_ticks(10))
 ```{r histogram, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Histogram števila naselij v občinah'}
 ggplot(obcine, aes(x = naselja)) + geom_histogram() +
   ggtitle("Pogostost števila naselij") + xlab("Število naselij") + ylab("Število občin")
