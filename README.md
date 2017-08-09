@@ -7,6 +7,7 @@ Odločil sem se, da bom v projektu analiziral smučarske skoke, saj je to šport
 
 Podatke sem pridobil iz uradne baze podatkov in iz wikipedie. Iz uradne baze sem dobil rezultate posameznega tekmovanja (denimo Planica, 23. marec 2017), medtem ko sem iz Wikipedie dobil podatke o državnih rekordih, poleg tega pa še nekaj tabel, ki sem jih sproti potreboval za analizo (npr. 2-mestne kratice držav). Največjo težave so mi predstavljali podatki iz FIS-a, saj so na voljo samo v PDF, tako da sem jih s programom najprej preoblikoval v xlsx ter nato uvozil v RStudio.
 Najpomembnejši strani:
+
     * baza FIS-a: https://data.fis-ski.com/ski-jumping/results.html
     * wikipedia: https://en.wikipedia.org/wiki/Ski_jumping
 
@@ -44,12 +45,12 @@ Druga tabela, ki sem jo pridobil iz Wikipedie, je tabela državnih rekordov in j
 
 Tretja tabela iz wikipedije je tabela dvomestinih kratic za države (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). 
 
-    1. stolpec: Code2 , factor  \n
-    2. stolpec: Country , character  \n
+    1. stolpec: Code2 , factor  
+    2. stolpec: Country , character 
 Četrta tabela iz wikipedije je tabela tromestinih kratic za države (https://en.wikipedia.org/wiki/ISO_3166-1). 
     
-    1. stolpec: Country , factor \n
-    2. stolpec: Code3 , factor \n
+    1. stolpec: Country , factor
+    2. stolpec: Code3 , factor
 
 ## Program
 
