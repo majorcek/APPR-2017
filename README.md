@@ -13,7 +13,7 @@ Najpomembnejši strani:
 Poizkušal bom ugotoviti, ali držijo nekatere moje domneve (da imajo tekmovalci iz Slovenije nižje hitrost ob doskoku), preveriti si želim tudi, ali držijo trditve slovenskih kometatorjev o nepoštenemu slogovnemu ocenjevanju. Poleg tega bom skušal zanimivo prikazati še nekatere druge podatke, denimo razvoj državnih rekordov in ocentiti njihovo gibanje v prihodnje.
 #### tabele
 Kot je navedeno zgoraj, sem večino podatkov o skokih dobil iz baze FIS-a (https://data.fis-ski.com/dynamic/event-details.html?event_id=39344&cal_suchsector=JP). Za vsako tekmovanje sem dobil svojo tabelo, ki je imela naslednjo obliko:
-kable(head(Planica2011_sobota))
+
     * 1. stolpec: IME in PRIIMEK skakalca , factor
     * 2. stolpec: HITROST ob odskoku (enota m/s) , številska spremenljivka 
     * 3. stolpec: DOLŽINA (enota m) , številska spremenljivka 
@@ -34,20 +34,20 @@ Tabele sem nato najprej združil po letih (Planica2011 vsebuje podatke o tekmah 
 Podatke sem pridobil tudi iz Wikipedie, predvsem s strani https://en.wikipedia.org/wiki/Ski_jumping.
 Tabela nad240 vsebuje podatke o vseh poletih, dolgih vsaj 240m . Izločil sem tiste skoke, ki niso bili doseženi na tekmi (treningi, poskusni skoki) in vzel samo uspešne skoke (izločil padce), saj sem želel opraviti analizo uspešnih skokov. Padec pomeni izgubo točk v višini približno 20 metrov, zaradi česar tak skok ne prinese vrhunske uvrstitve.
 Tabela ima nasldnjo obliko: 
-kable(head(nad240))
-    1. stolpec: LETO , številska spremenljivka \n
-    2. stolpec: SKAKALEC (ime in priimek), factor \n
-    3. stolpec: DRŽAVA (od kod je skakalec), factor \n
-    4. stolpec: LOKACIJA (na kateri skakalnici), factor \n
-    5. stolpec: DOLŽINA (enota m) , številska spremenljivka \n   
+
+    1. stolpec: LETO , številska spremenljivka 
+    2. stolpec: SKAKALEC (ime in priimek), factor 
+    3. stolpec: DRŽAVA (od kod je skakalec), factor
+    4. stolpec: LOKACIJA (na kateri skakalnici), factor
+    5. stolpec: DOLŽINA (enota m) , številska spremenljivka   
 Druga tabela, ki sem jo pridobil iz Wikipedie, je tabela državnih rekordov in je dostopna na istem naslovu. To tabelo sem moral malenkost povpraviti, saj zaradi čudne oblike tabele nekaj vrstic ni pravilno uvozilo.
 
 Tretja tabela iz wikipedije je tabela dvomestinih kratic za države (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). 
-    kable(head(okrajsave2))
+
     1. stolpec: Code2 , factor  \n
     2. stolpec: Country , character  \n
-Četrta tabela iz wikipedije je tabela tromestinih kratic za države (https://en.wikipedia.org/wiki/ISO_3166-1). \n
-    kable(head(okrajsave3))
+Četrta tabela iz wikipedije je tabela tromestinih kratic za države (https://en.wikipedia.org/wiki/ISO_3166-1). 
+    
     1. stolpec: Country , factor \n
     2. stolpec: Code3 , factor \n
 
