@@ -24,13 +24,6 @@ dodaj1 <- c("2017","Andreas Wellinger","Vikersund, Norway", "242 m") #pomanjklji
 dodaj2 <- c("2017","Andreas Stjernen","Vikersund, Norway",	"242 m")
 rezultati <- rbind(rezultati, dodaj1, dodaj2)
 
-#razmere <- read.xlsx("podatki/skoki1.xlsx","V17",encoding = "UTF-8")
-#colnames(razmere) <- c("LETO", "SKAKALEC", "DOLŽINA", "HITROST", "VETER", "IZRAVNAVA", "LOKACIJA")
-#razmere <- razmere[!(razmere$HITROST == ""),]
-#razmere <- razmere[rowSums(is.na(razmere)) == 0,]
-#razmere <- razmere[, !(names(razmere) == "VETER")]
-#razmere$LETO <- as.integer(razmere$LETO)
-
 nad240$LETO <- as.integer(nad240$LETO)
 nad240$DOLŽINA <- as.numeric(nad240$DOLŽINA)
 drops <- c("SKAKALNICA","VELIKOST SKAKALNICE(HS)", "OPOMBE")
