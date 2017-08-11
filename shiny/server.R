@@ -14,19 +14,20 @@ shinyServer(function(input, output) {
     
       g1 + xlim(2011, 2025) +
         geom_smooth(method = 'lm', fullrange = TRUE, se = FALSE) +
-        xlab("Leto") + ylab("št. poletov čez 220m")
+        xlab("Leto") + ylab("št. poletov čez 200m")
     } else {
-      data1 <- filter(nad200_drzave, SKAKALNICA %in% input$skakalnica1) 
+      data0 <- filter(nad200_drzave, SKAKALNICA %in% input$skakalnica1)
+      data1 <- aggregate(n ~ LETO + SKAKALNICA, data = data0, sum)
       g1 <- ggplot(data1, aes(x = LETO, y = n)) +
         geom_point()
       
       g1 + xlim(2011, 2025) +
         geom_smooth(method = 'lm', fullrange = TRUE, se = FALSE) +
-        xlab("Leto") + ylab("št. poletov čez 220m")
+        xlab("Leto") + ylab("št. poletov čez 200m")
     }
   })
   
-  # 2. planica
+  # 2. ocene
   output$ocene <- renderPlot({
     data2 <- filter(vsi_skoki,
                     SKAKALNICA == input$skakalnica2,
@@ -39,7 +40,6 @@ shinyServer(function(input, output) {
     
     ggplot(data2, aes(x = DOLŽINE_RAZREDI, y = OCENE, color = DRŽAVA)) +
       geom_line() +
-      #geom_smooth(method = 'lm', fullrange = TRUE, se = FALSE) +
       geom_point()
   })
   
@@ -87,7 +87,7 @@ shinyServer(function(input, output) {
     ggplot() +
       geom_polygon(data = pred_for_map1, aes(x = long, y = lat, group = group), fill = "white", color = "black") +
       geom_polygon(data = data5,aes(x = long, y = lat, group = group,fill = place), color = "black")+
-      scale_fill_brewer(name = "place", palette = "Spectral", na.value = "grey50")+
+      scale_fill_brewer(name = "SKAKALNICA", palette = "Spectral", na.value = "grey50")+
       coord_quickmap(xlim = c(-20,40), ylim = c(35,70))  
   })
 })

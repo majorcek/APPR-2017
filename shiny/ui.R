@@ -4,7 +4,7 @@ shinyUI(fluidPage(
   titlePanel("Grafični prikaz smučarskih skokov"),
   
   tabsetPanel(
-    tabPanel("napovedi državnih rekordov",
+    tabPanel("napoved števila skokov čet 200m",
              sidebarPanel(#'Na spodnjem grafu lahko vidimo predikcijo glede skokov čez 200m na podlagi linearne regresije.' 
                radioButtons(inputId = 'skakalnica1', 
                             label = 'Skakalnica:', 
