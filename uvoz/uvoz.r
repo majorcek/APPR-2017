@@ -25,7 +25,7 @@ dodaj2 <- c("2017","Andreas Stjernen","Vikersund, Norway",	"242 m")
 rezultati <- rbind(rezultati, dodaj1, dodaj2)
 
 razmere <- read.xlsx("podatki/skoki1.xlsx","V17",encoding = "UTF-8")
-colnames(razmere) <- c("LETO", "SKAKALEC", "DOLŽINA", "HITROST", "VETER", "IZRAVNAVA", "LOKACIJA")
+colnames(razmere) <- c("LETO", "SKAKALEC", "DOLŽINA", "HITROST", "VETER", "IZRAVNAVA")
 razmere <- razmere[!(razmere$HITROST == ""),]
 razmere <- razmere[rowSums(is.na(razmere)) == 0,]
 razmere <- razmere[, !(names(razmere) == "VETER")]
@@ -494,7 +494,7 @@ vsi_skoki <- Reduce(function(x, y) merge(x, y, all=TRUE), list(planica, vikersun
 gsub("[[:punct:]]", " ", vsi_skoki)
 
 # skakalci
-skakalci_drzave <- read.xlsx("podatki/skakalci.xlsx",sheetIndex = 1, header = FALSE)
+skakalci_drzave <- read.xlsx("podatki/SKAKALCI.xlsx",sheetIndex = 1, header = FALSE)
 names(skakalci_drzave) <- c("SKAKALEC","DRŽAVA")
 skakalci_drzave$SKAKALEC <- gsub("-"," ",skakalci_drzave$SKAKALEC)
 skakalci_drzave <- unique(skakalci_drzave)
