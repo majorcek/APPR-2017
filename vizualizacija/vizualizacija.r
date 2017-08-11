@@ -161,7 +161,8 @@ zemljevidEuropa <- ggplot(data = pred_for_map1) +
   scale_color_manual(name = "SKAKALNICA",
                      breaks = c("Planica", "Vikersund", "Kulm", "Harrachov", "ostalo"),
                      values = c("Planica" = "chocolate1", "Vikersund" = "orangered", "Kulm" = "gold1", "Harrachov" = "green", "ostalo" = "orchid4"))+ 
-  coord_quickmap(xlim = c(-25, 40), ylim = c(32, 72)) 
+  coord_quickmap(xlim = c(-25, 40), ylim = c(32, 72)) +
+  ditch_the_axes
   
 
   
