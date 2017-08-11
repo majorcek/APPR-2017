@@ -25,7 +25,7 @@ dodaj2 <- c("2017","Andreas Stjernen","Vikersund, Norway",	"242 m")
 rezultati <- rbind(rezultati, dodaj1, dodaj2)
 
 razmere <- read.xlsx("podatki/skoki1.xlsx","V17",encoding = "UTF-8")
-colnames(razmere) <- c("LETO", "SKAKALEC", "DOLŽINA", "HITROST", "VETER", "IZRAVNAVA")
+colnames(razmere) <- c("LETO", "SKAKALEC", "DOLŽINA", "HITROST", "VETER", "IZRAVNAVA", "LOKACIJA")
 razmere <- razmere[!(razmere$HITROST == ""),]
 razmere <- razmere[rowSums(is.na(razmere)) == 0,]
 razmere <- razmere[, !(names(razmere) == "VETER")]
@@ -67,6 +67,9 @@ skakalnice_rekordi <- unique(ostale_skakalnice$place)
 drzavni_rekordi$place[drzavni_rekordi$place %in% skakalnice_rekordi] <- "ostalo"
 drzavni_rekordi$metres <- gsub("\\..*","",drzavni_rekordi$metres)
 drzavni_rekordi$metres <- as.numeric(drzavni_rekordi$metres)
+
+drzavni_rekordi$Country <- drzavni_rekordi$Country %>% parse_character() %>%
+  strapplyc("^[^A-Z]*([^[]*)") %>% unlist()
 
 ### uvoz tabele uradnih dvomestnih oznak držav 
 
