@@ -54,7 +54,6 @@ print(porazdelitev)
 
 ### število tekem 
 Slika \ref{fig:graf2} prikazuje število tekem v posameznem letu. Vidimo, da je število dokaj konstantno. Izjema je leto 2014, ko so bile zaradi zamude pri prenovi Planice na sporedu zgolj tri tekme.
-
 ```{r graf2, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Število tekem po letih'}
 print(st_tekem)
 ```
@@ -62,7 +61,7 @@ print(st_tekem)
 
 Naslednji graf prikazuje število tekmovalcev iz nekaterih držav v posameznih letih. Omeniti velja, da na število vpliva tudi to, ali je v danem letu potekala kakšna tekma v domači državi. Opazimo lahko, da je najmanj naših tekmovalcev nastopilo ravno leta 2014, ko ni bilo tekme na letalnici v Planici in posledično ni bilo možnosti izkoristil nacionalne kvote za domačo reprezentanco.
 
-```{r graf3, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Porazdelitev dolžin skokov'}
+```{r graf3, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Število tekmovalcev'}
 print(graf.tekmovalci)
 ```
 ***
@@ -73,7 +72,6 @@ Z naslednjim grafom sem skušal prikazati, kako se z leti spreminja povprečna d
 ```{r graf4, echo=FALSE, message=FALSE, fig.align='center', fig.cap='povprečna dolžina skokov'}
 print(povprecen)
 ```
-
 
 ###  dolžina glede na pogoje
 Graf \ref{fig:graf5} prikazuje, kako pogoji vplivajo na dolžino skoka. Po pričakovanjih se izkaže, da so najdaljalši skoki doseženi v dobrih razmerah in da zvišanje naleta ob slabih razmerah ne nadomesti dobrih vremenskih razmer.
