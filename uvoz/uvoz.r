@@ -24,12 +24,12 @@ dodaj1 <- c("2017","Andreas Wellinger","Vikersund, Norway", "242 m") #pomanjklji
 dodaj2 <- c("2017","Andreas Stjernen","Vikersund, Norway",	"242 m")
 rezultati <- rbind(rezultati, dodaj1, dodaj2)
 
-razmere <- read.xlsx("podatki/skoki1.xlsx","V17",encoding = "UTF-8")
-colnames(razmere) <- c("LETO", "SKAKALEC", "DOLŽINA", "HITROST", "VETER", "IZRAVNAVA", "LOKACIJA")
-razmere <- razmere[!(razmere$HITROST == ""),]
-razmere <- razmere[rowSums(is.na(razmere)) == 0,]
-razmere <- razmere[, !(names(razmere) == "VETER")]
-razmere$LETO <- as.integer(razmere$LETO)
+#razmere <- read.xlsx("podatki/skoki1.xlsx","V17",encoding = "UTF-8")
+#colnames(razmere) <- c("LETO", "SKAKALEC", "DOLŽINA", "HITROST", "VETER", "IZRAVNAVA", "LOKACIJA")
+#razmere <- razmere[!(razmere$HITROST == ""),]
+#razmere <- razmere[rowSums(is.na(razmere)) == 0,]
+#razmere <- razmere[, !(names(razmere) == "VETER")]
+#razmere$LETO <- as.integer(razmere$LETO)
 
 nad240$LETO <- as.integer(nad240$LETO)
 nad240$DOLŽINA <- as.numeric(nad240$DOLŽINA)
@@ -48,7 +48,9 @@ drzavni_rekordi <- readHTMLTable(webpage2, header = TRUE,
 
 drzavni_rekordi <- drzavni_rekordi[,c("Nation","Metres","Place")]
 names(drzavni_rekordi) <- c("Country","metres","place")
-drzavni_rekordi$Country <- gsub("\\[.*", "", drzavni_rekordi$Country)
+drzavni_rekordi$Country <- drzavni_rekordi$Country %>% parse_character() %>%
+  strapplyc("^[^A-Z]*([^[]*)") %>% unlist()
+
 
 # popravek zaradi čudne oblike tabele na wikipedii
 drzavni_rekordi <- filter(drzavni_rekordi, !(drzavni_rekordi$Country %in% c("Chris Hellerud","Ireland","Latvia","South Korea")))
@@ -68,8 +70,6 @@ drzavni_rekordi$place[drzavni_rekordi$place %in% skakalnice_rekordi] <- "ostalo"
 drzavni_rekordi$metres <- gsub("\\..*","",drzavni_rekordi$metres)
 drzavni_rekordi$metres <- as.numeric(drzavni_rekordi$metres)
 
-drzavni_rekordi$Country <- drzavni_rekordi$Country %>% parse_character() %>%
-  strapplyc("^[^A-Z]*([^[]*)") %>% unlist()
 
 ### uvoz tabele uradnih dvomestnih oznak držav 
 
