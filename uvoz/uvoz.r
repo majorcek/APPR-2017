@@ -6,7 +6,8 @@ url <- "https://en.wikipedia.org/wiki/List_of_the_longest_ski_jumps"
 webpage <- getURL(url)
 nad240 <- readHTMLTable(webpage, header = TRUE,
                         colClasses = NULL, skip.rows = integer(), trim = TRUE,
-                        elFun = xmlValue, as.data.frame = TRUE, which = 5,encoding = "Windows-1250")
+                        elFun = xmlValue, as.data.frame = TRUE, which = 5,
+                        encoding = "UTF-8")
 nad240$No. <- NULL
 nad240$Size <- NULL
 nad240$Hill <- NULL
@@ -17,10 +18,6 @@ nad240$OPOMBE <- sub(".* m","",nad240$OPOMBE)
 nad240$DOLŽINA <- gsub(" m.*","",nad240$DOLŽINA ) %>%  as.character %>% as.numeric()
 nad240 <- nad240[(nad240$OPOMBE == ""),]
 nad240$OPOMBE <- NULL
-
-#skakalnice <- nad240[,c("LOKACIJA")]
-#tekmovalci <- nad240[,c("SKAKALEC", "DRŽAVA")]
-#tekmovalci <- tekmovalci[!duplicated(tekmovalci), ]
 
 rezultati <- nad240[,c("LETO","SKAKALEC","LOKACIJA", "DOLŽINA")]
 dodaj1 <- c("2017","Andreas Wellinger","Vikersund, Norway", "242 m") #pomanjkljiva tabela na wikipedii
@@ -45,9 +42,9 @@ nad240 <- nad240[, !(names(nad240) %in% drops)]
 url2 <- "https://en.wikipedia.org/wiki/Ski_jumping"
 webpage2 <- getURL(url2)
 drzavni_rekordi <- readHTMLTable(webpage2, header = TRUE,
-                        colClasses = c("character","character","numeric","numeric","character","numeric","character"), 
-                        skip.rows = integer(), trim = TRUE,
-                        elFun = xmlValue, as.data.frame = TRUE, which = 8, encoding = "UTF-8")
+                                 skip.rows = integer(), trim = TRUE,
+                                 elFun = xmlValue, as.data.frame = TRUE, which = 8, 
+                                 encoding = "UTF-8")
 
 drzavni_rekordi <- drzavni_rekordi[,c("Nation","Metres","Place")]
 names(drzavni_rekordi) <- c("Country","metres","place")
@@ -68,15 +65,17 @@ drzavni_rekordi$place <- gsub("Tauplitz","Kulm",drzavni_rekordi$place) # Tauplit
 ostale_skakalnice <- filter(drzavni_rekordi, !(drzavni_rekordi$place %in% c("Planica","Vikersund", "Kulm", "Harrachov", "Obersdorf")))
 skakalnice_rekordi <- unique(ostale_skakalnice$place)
 drzavni_rekordi$place[drzavni_rekordi$place %in% skakalnice_rekordi] <- "ostalo"
-
+drzavni_rekordi$metres <- gsub("\\..*","",drzavni_rekordi$metres)
+drzavni_rekordi$metres <- as.numeric(drzavni_rekordi$metres)
 
 ### uvoz tabele uradnih dvomestnih oznak držav 
 
 url3 <- "https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2"
 webpage3 <- getURL(url3)
 okrajsave2 <- readHTMLTable(webpage3, header = TRUE,
-                                 colClasses = NULL, skip.rows = integer(), trim = TRUE,
-                                 elFun = xmlValue, as.data.frame = TRUE, which = 3, encoding = "UTF-8")
+                            colClasses = NULL, skip.rows = integer(), trim = TRUE,
+                            elFun = xmlValue, as.data.frame = TRUE, which = 3, 
+                            encoding = "UTF-8")
 
 okrajsave2 <- okrajsave2[1:2]
 colnames(okrajsave2) <- c("Code2", "Country")
@@ -92,14 +91,16 @@ url4 <- "https://en.wikipedia.org/wiki/ISO_3166-1"
 webpage4 <- getURL(url4)
 okrajsave3 <- readHTMLTable(webpage4, header = TRUE,
                            colClasses = NULL, skip.rows = integer(), trim = TRUE,
-                           elFun = xmlValue, as.data.frame = TRUE, which = 2,encoding = "UTF-8")
+                           elFun = xmlValue, as.data.frame = TRUE, which = 2,
+                           encoding = "UTF-8")
 okrajsave3 <- okrajsave3[,c(1,3)]
 colnames(okrajsave3) <- c("Country", "Code3")
+okrajsave3$Country <- gsub("!.*", "", okrajsave3$Country)
 okrajsave <- merge(okrajsave2,okrajsave3, by = "Country")
 
 
 #priprava za graf števila tekem 
-
+leta <- c(2011:2017)
 pla <- data.frame(leta, "Planica")
 colnames(pla) <- c("LETO", "SKAKALNICA")
 vik <- data.frame(leta, "Vikersund")
