@@ -150,12 +150,6 @@ zemljevid1 <- ggplot() +
 # samo evropa, tudi glede na dolžino skoka
 # obroba pove skakalnico, transparentnost pa daljavo
 
-#drzavni_rekordi_europa <- drzavni_rekordi2[,1:4]
-#drzave_celine <- unique(pred_for_map1[,c("sovereignt","continent","iso_a2")]) %>% filter(continent == "Europe")
-#drzavni_rekordi_europa <- merge(drzave_celine,drzavni_rekordi_europa, by = "iso_a2") 
-#drzavni_rekordi_europa <- drzavni_rekordi_europa[,4:6]
-
-
 zemljevidEuropa <- ggplot(data = pred_for_map1) +
   geom_polygon(aes(x = long, y = lat, fill = metres, group = group)) +   
   scale_fill_gradient2(name = "DRŽAVNI REKORD",
